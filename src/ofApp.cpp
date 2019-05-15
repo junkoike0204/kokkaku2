@@ -58,6 +58,7 @@ void ofApp::keyPressed(int key){
             currentScene++;
             currentScene %=scenes.size();
            // scenes[currentScene]->setup();
+          // scenes[currentScene]->setup();
             scenes[currentScene]->startMusic();
             
             break;

@@ -7,7 +7,7 @@
 #define sceneB_hpp
 #pragma once
 
-
+#define NUM 1000
 #include <stdio.h>
 #include "ofMain.h"
 #include "Basescene.hpp"
@@ -19,7 +19,12 @@ class sceneB : public Basescene {
     void draw();
     void stopMusic();
     void startMusic();
-      ofSoundPlayer playerB;
-     Boolean onoff;
+     void fftUpdate();
+        void drawDisc();
+    ofSoundPlayer playerB;
+    Boolean onoff = false;
+    float *volume;
+    float* fftSmoothed; //っfft解析結果を格納する配列
+    int nBandsToGet;
 };
 

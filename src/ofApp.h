@@ -31,8 +31,8 @@ class ofApp : public ofBaseApp{
         int currentScene;//現在のシーン番号
     
         vector <Boolean> PlayOrNot;
-    //今日の再生する、しないを格納する配列
-        vector <ofSoundPlayer> songs ;
+    //再生する、しないを格納する配列
+      //  vector <ofSoundPlayer> songs ;
     
         ofLight light;//陰影を加える
         ofEasyCam cam; //EasyCamのインスタンス化

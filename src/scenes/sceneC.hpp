@@ -4,7 +4,7 @@
 //
 //  Created by 小池潤 on 2019/05/11.
 //
-
+#define NUM 1000
 
 #define sceneC_hpp
 #pragma once
@@ -18,8 +18,15 @@ class sceneC : public Basescene {
     void update();
     void draw();
     void stopMusic();
-       void startMusic();
-      ofSoundPlayer playerC;
-     Boolean onoff;
+    void startMusic();
+    void fftUpdate();
+    void drawDisc();
+    ofSoundPlayer playerC;
+    Boolean onoff = false;
+    
+    float *volume;
+    float* fftSmoothed; //っfft解析結果を格納する配列
+    int nBandsToGet; //fft解析の制度：このプロジェクトでは四角形の本数の多さに影響。
+    
 };
 
