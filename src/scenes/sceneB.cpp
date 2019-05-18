@@ -9,7 +9,7 @@
 void sceneB::setup(){
     
     ofSetVerticalSync(true);
-    playerB.load("Wannabe.mp3");
+    playerB.load("WhatYouGot.mp3");
     playerB.setVolume(1.0);
     playerB.setMultiPlay(false);
     playerB.setLoop(true); //loop on by "true"
@@ -29,18 +29,16 @@ ofSetWindowTitle(to_string(ofGetFrameRate()));//window上側にフレーム数�
 }
 //-----------------------------------------------------------------------------------------------------
 void sceneB::draw(){
+     ofDrawBitmapString("sceneB", 20, 20);
     cam.begin();
-//    ofPushMatrix();
-//    ofTranslate(ofGetWidth()/2, ofGetHeight()/2, 200);
-//    ofRotateDeg(ofGetElapsedTimeMillis());
     cam.setPosition(300*sin(ofMap(ofGetElapsedTimeMillis(), 0, 10000, 0, 2*PI)), 1000, 1500*cos(ofMap(ofGetElapsedTimeMillis(), 0, 10000, 0, 2*PI)));
     ofBackground(0,200,40);
     ofSetColor(247, 242, 215);
     ofVec3f disc(100,200,300);
     cam.lookAt(disc);
-    ofDrawBitmapString("sceneB", 20, 20);
+  
     ofDrawCircle(disc,100);
-    ofSetColor(250, 0, 0);
+    ofSetColor(250);
     ofNoFill();
     for (int i =0; i<nBandsToGet; i+=10) {
         ofDrawCircle(100,200,300, fftSmoothed[i]*400+30);
@@ -56,14 +54,17 @@ void sceneB::draw(){
   //  ofRotateYDeg(180+50*ofMap(ofGetElapsedTimeMillis(), 0, 10000, 0, 2*PI));
     ofRotateXDeg(90);
     for (int i =0; i<nBandsToGet; i+=10) {
+//        if (i<30)
+//            ofSetColor(250, 0, 0);
+//        else
+            ofSetColor(250);
         ofDrawCircle(0,0,0, fftSmoothed[i]*400+30);
-        
     }
     ofPopMatrix();
     drawDisc();
-//    ofPopMatrix();
     
     cam.end();
+     ofDrawBitmapString("sceneB", 20, 20);
 }
 //-----------------------------------------------------------------------------------------------------
 void sceneB::fftUpdate(){

@@ -32,4 +32,5 @@ class Basescene{
     virtual void fftUpdate(){};
     virtual void drawDisc(){};
     ofEasyCam cam;
+    ofBoxPrimitive box;
 };

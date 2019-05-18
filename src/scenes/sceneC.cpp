@@ -19,6 +19,14 @@ void sceneC::setup(){
         fftSmoothed[i]=0;
     }
     nBandsToGet = 80;
+    
+    for(int i = 0; i<boxNUM; i++){
+//        box[i].setPosition(ofRandom(300)*sin(ofRandom(0, 360)),0,ofRandom(300)*cos(ofRandom(0, 360)));
+        box[i].setPosition(ofRandom(1,4)*100*cos(ofMap(10*(i%36),0,360,0,2*PI)),0,
+                           ofRandom(1,4)*100*sin(ofMap(10*(i%36),0,360,0,2*PI)));
+       
+                                             }
+    ofSetFrameRate(30);
 }
 
 void sceneC::update(){
@@ -27,16 +35,33 @@ void sceneC::update(){
 }
 
 void sceneC::draw(){
+    cam.begin();
+    ofVec3f campoint(0,0,0);
+    cam.lookAt(campoint);
+//    cam.setPosition(2000*sin(ofMap(ofGetElapsedTimeMillis(), 0, 10000, 0, 2*PI)), 700, 2000*sin(2*ofMap(ofGetElapsedTimeMillis(), 0, 10000, 0, 2*PI)));
+      cam.setPosition(2000*sin(ofMap(ofGetElapsedTimeMillis(), 0, 10000, 0, 2*PI)), 700, 2000*cos(ofMap(ofGetElapsedTimeMillis(), 0, 10000, 0, 2*PI)));
     ofBackground(40,0,240);
     ofSetColor(218, 78, 109);
-    ofDrawCircle(ofGetWidth()/2, ofGetHeight()/2, 100);
-    ofDrawBitmapString("sceneC", 20, 20);
-    for (int i =0; i<nBandsToGet; i+=10) {
-        ofNoFill();
-        ofDrawCircle(ofGetWidth()/2, ofGetHeight()/2, fftSmoothed[i]*400+30);
-        
+//    ofDrawCircle(ofGetWidth()/2, ofGetHeight()/2, 100);
+//    ofDrawBitmapString("sceneC", 20, 20);
+//    for (int i =0; i<nBandsToGet; i+=10) {
+//        ofNoFill();
+//        ofDrawCircle(ofGetWidth()/2, ofGetHeight()/2, fftSmoothed[i]*400+30);
+    
+//    }
+    //drawDisc();
+
+    for (int i =0; i<boxNUM; i++) {
+        box[i].set(volume[i]*100);
+        if(volume[i]<0.5)
+        box[i].draw();
     }
-    drawDisc();
+    ofSetColor(0);
+    ofPushMatrix();
+    ofRotateXDeg(90);
+    ofDrawCircle(0,0,0, 400);
+    ofPopMatrix();
+    cam.end();
 }
 void sceneC::fftUpdate(){
     ofSoundUpdate();

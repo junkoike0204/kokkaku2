@@ -27,6 +27,9 @@ class sceneC : public Basescene {
     float *volume;
     float* fftSmoothed; //っfft解析結果を格納する配列
     int nBandsToGet; //fft解析の制度：このプロジェクトでは四角形の本数の多さに影響。
+    int boxNUM = 500;
+    ofBoxPrimitive box[700];
+    ofEasyCam cam;
     
 };
 
