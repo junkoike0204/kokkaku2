@@ -5,7 +5,7 @@
 #include "sceneA.hpp"
 #include "sceneB.hpp"
 #include "sceneC.hpp"
-
+#include "ofxLeapMotion2.h"
 
 
 class ofApp : public ofBaseApp{
@@ -40,6 +40,7 @@ class ofApp : public ofBaseApp{
     
     int songNUM = 6;//収納されている曲の合計数
     int songID = 0;//曲の通し番号
+    
     
     
     

@@ -1,5 +1,5 @@
 #include "ofApp.h"
-
+#include "ofxLeapMotion2.h"
 //--------------------------------------------------------------
 void ofApp::setup(){
     

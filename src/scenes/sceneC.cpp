@@ -39,7 +39,7 @@ void sceneC::draw(){
     ofVec3f campoint(0,0,0);
     cam.lookAt(campoint);
 //    cam.setPosition(2000*sin(ofMap(ofGetElapsedTimeMillis(), 0, 10000, 0, 2*PI)), 700, 2000*sin(2*ofMap(ofGetElapsedTimeMillis(), 0, 10000, 0, 2*PI)));
-      cam.setPosition(2000*sin(ofMap(ofGetElapsedTimeMillis(), 0, 10000, 0, 2*PI)), 700, 2000*cos(ofMap(ofGetElapsedTimeMillis(), 0, 10000, 0, 2*PI)));
+      cam.setPosition(2000*sin(3*ofMap(ofGetElapsedTimeMillis(), 0, 10000, 0, 2*PI)), 700, 2000*cos(2*ofMap(ofGetElapsedTimeMillis(), 0, 10000, 0, 2*PI)));
     ofBackground(40,0,240);
     ofSetColor(218, 78, 109);
 //    ofDrawCircle(ofGetWidth()/2, ofGetHeight()/2, 100);
