@@ -29,17 +29,41 @@ ofSetWindowTitle(to_string(ofGetFrameRate()));//window上側にフレーム数�
 }
 //-----------------------------------------------------------------------------------------------------
 void sceneB::draw(){
+    cam.begin();
+//    ofPushMatrix();
+//    ofTranslate(ofGetWidth()/2, ofGetHeight()/2, 200);
+//    ofRotateDeg(ofGetElapsedTimeMillis());
+    cam.setPosition(300*sin(ofMap(ofGetElapsedTimeMillis(), 0, 10000, 0, 2*PI)), 1000, 1500*cos(ofMap(ofGetElapsedTimeMillis(), 0, 10000, 0, 2*PI)));
     ofBackground(0,200,40);
     ofSetColor(247, 242, 215);
-    ofDrawCircle(ofGetWidth()/2, ofGetHeight()/2, 100);
+    ofVec3f disc(100,200,300);
+    cam.lookAt(disc);
     ofDrawBitmapString("sceneB", 20, 20);
+    ofDrawCircle(disc,100);
     ofSetColor(250, 0, 0);
     ofNoFill();
     for (int i =0; i<nBandsToGet; i+=10) {
-        ofDrawCircle(ofGetWidth()/2, ofGetHeight()/2, fftSmoothed[i]*400+30);
+        ofDrawCircle(100,200,300, fftSmoothed[i]*400+30);
         
     }
+    ofPushMatrix();
+   ofTranslate(100,200,300);
+    ofRotateYDeg(50*ofMap(ofGetElapsedTimeMillis(), 0, 10000, 0, 2*PI));
+    for (int i =0; i<nBandsToGet; i+=10) {
+        ofDrawCircle(0,0,0, fftSmoothed[i]*400+30);
+        
+    }
+  //  ofRotateYDeg(180+50*ofMap(ofGetElapsedTimeMillis(), 0, 10000, 0, 2*PI));
+    ofRotateXDeg(90);
+    for (int i =0; i<nBandsToGet; i+=10) {
+        ofDrawCircle(0,0,0, fftSmoothed[i]*400+30);
+        
+    }
+    ofPopMatrix();
     drawDisc();
+//    ofPopMatrix();
+    
+    cam.end();
 }
 //-----------------------------------------------------------------------------------------------------
 void sceneB::fftUpdate(){
@@ -67,13 +91,13 @@ void sceneB::drawDisc(){
     //draw lines for the disc
     ofSetColor(250, 250, 250);
     for (int i =2; i<10; i++) {
-        ofDrawCircle(ofGetWidth()/2, ofGetHeight()/2, i*40);
+        ofDrawCircle(100,200,300, i*40);
     }
-    ofDrawBitmapString("sceneA", 20, 20);
+    
     ofFill();
     ofSetColor(64, 182, 152);
-    ofDrawCircle(ofGetWidth()/2, ofGetHeight()/2, 50);
+    ofDrawCircle(100,200,300, 50);
     //draw the disc itself
     ofSetColor(0, 0, 0);
-    ofDrawCircle(ofGetWidth()/2, ofGetHeight()/2, ofGetHeight()/2);
+    ofDrawCircle(100,200,300, ofGetHeight()/2);
 }

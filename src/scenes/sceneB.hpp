@@ -26,5 +26,6 @@ class sceneB : public Basescene {
     float *volume;
     float* fftSmoothed; //っfft解析結果を格納する配列
     int nBandsToGet;
+    ofEasyCam cam;
 };
 

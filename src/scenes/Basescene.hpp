@@ -31,5 +31,5 @@ class Basescene{
     virtual void startMusic(){};
     virtual void fftUpdate(){};
     virtual void drawDisc(){};
-    
+    ofEasyCam cam;
 };
