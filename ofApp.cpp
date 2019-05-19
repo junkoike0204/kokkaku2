@@ -44,8 +44,9 @@ void ofApp::setup(){
     }//それぞれのシーンのセットアップを行う
     
     for (int i=0; i<30; i++) {
-        onoff[i]=false;
-    }//swipe認識用の配列のリセット。
+        RSwipeOnOff[i]=false;
+        LSwipeOnOff[i]=false;
+    }//右swipe認識用の配列のリセット。
     
    // songs[1].play();
 }
@@ -57,22 +58,27 @@ void ofApp::update(){
      switch (leap.iGestures) {
      case 3:
          {
-             
-             cout<<"swiped"<<endl;
-
+             cout<<"swiped right"<<endl;
+             break;
          }
+    case 4:
+         {
+             cout<<"swiped left"<<endl;
+             break;
+         }
+            
 }
     
     leap.updateGestures();  // check for gesture updates
     leap.markFrameAsOld();
     if (leap.iGestures ==3) {
-        onoff[ofGetFrameNum()%30]=true;
+        RSwipeOnOff[ofGetFrameNum()%30]=true;
     }//もしスワイプが確認されたらtrue
-    else   onoff[ofGetFrameNum()%30] = false;
+    else   RSwipeOnOff[ofGetFrameNum()%30] = false;
 //されなければfalseを代入
     
-   // onoff[ofGetFrameNum()%30]=false;
-    if (onoff[ofGetFrameNum()%30]==false&&onoff[ofGetFrameNum()%30-1]==true) {
+   
+    if (RSwipeOnOff[ofGetFrameNum()%30]==false&&RSwipeOnOff[ofGetFrameNum()%30-1]==true) {
         //もし現フレームでスワイプが認識されず、前フレームでスワイプが認識されていたら
         //つまりスワイプが終わった時点で
         scenes[currentScene]->stopMusic();
@@ -83,7 +89,24 @@ void ofApp::update(){
         scenes[currentScene]->startMusic();
         //シーンの切り替え作業を行う
         for (int i =0; i<30; i++) {
-            onoff[i]=false;
+            RSwipeOnOff[i]=false;
+        }//スワイプ判定は全てリセット
+    }
+    
+    
+    //左向きスワイプで曲の一個戻し
+    if (LSwipeOnOff[ofGetFrameNum()%30]==false&&LSwipeOnOff[ofGetFrameNum()%30-1]==true) {
+        //もし現フレームでスワイプが認識されず、前フレームでスワイプが認識されていたら
+        //つまりスワイプが終わった時点で
+        scenes[currentScene]->stopMusic();
+        currentScene-=currentScene;
+        currentScene %=scenes.size();
+        // scenes[currentScene]->setup();
+        scenes[currentScene]->setup();
+        scenes[currentScene]->startMusic();
+        //シーンの切り替え作業を行う
+        for (int i =0; i<30; i++) {
+            LSwipeOnOff[i]=false;
         }//スワイプ判定は全てリセット
     }
 //    //現在表示しているシーンを更新
