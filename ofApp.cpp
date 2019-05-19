@@ -20,7 +20,8 @@ void ofApp::setup(){
     Basescene * sb = new sceneB();
     scenes.push_back(sb);
     Basescene * sc = new sceneC();
-    //scenes.push_back(sc);
+    
+    scenes.push_back(sc);
     //現在シーンを０に。
     currentScene = 0;
     scenes[currentScene]->setup();
@@ -38,13 +39,13 @@ void ofApp::setup(){
 //        PlayOrNot.push_back(false);
 //        //配列songsに読み込みとセットアップ
 //    }
-    for (int i=0; i<2; i++) {
+    for (int i=0; i<3; i++) {
         scenes[i]->setup();
-    }
+    }//それぞれのシーンのセットアップを行う
     
     for (int i=0; i<30; i++) {
         onoff[i]=false;
-    }
+    }//swipe認識用の配列のリセット。
     
    // songs[1].play();
 }
@@ -56,35 +57,34 @@ void ofApp::update(){
      switch (leap.iGestures) {
      case 3:
          {
-             cout<<"swiped/n";
-//             scenes[currentScene]->stopMusic();
-//             currentScene++;
-//             currentScene %=scenes.size();
-//             // scenes[currentScene]->setup();
-//             // scenes[currentScene]->setup();
-//             scenes[currentScene]->startMusic();
+             
+             cout<<"swiped"<<endl;
 
          }
 }
-                 leap.updateGestures();  // check for gesture updates
+    
+    leap.updateGestures();  // check for gesture updates
     leap.markFrameAsOld();
     if (leap.iGestures ==3) {
         onoff[ofGetFrameNum()%30]=true;
-    }
+    }//もしスワイプが確認されたらtrue
     else   onoff[ofGetFrameNum()%30] = false;
-
+//されなければfalseを代入
     
    // onoff[ofGetFrameNum()%30]=false;
     if (onoff[ofGetFrameNum()%30]==false&&onoff[ofGetFrameNum()%30-1]==true) {
+        //もし現フレームでスワイプが認識されず、前フレームでスワイプが認識されていたら
+        //つまりスワイプが終わった時点で
         scenes[currentScene]->stopMusic();
         currentScene++;
         currentScene %=scenes.size();
         // scenes[currentScene]->setup();
         scenes[currentScene]->setup();
         scenes[currentScene]->startMusic();
+        //シーンの切り替え作業を行う
         for (int i =0; i<30; i++) {
             onoff[i]=false;
-        }
+        }//スワイプ判定は全てリセット
     }
 //    //現在表示しているシーンを更新
 }
@@ -121,14 +121,14 @@ void ofApp::keyPressed(int key){
             currentScene++;
             currentScene %=scenes.size();
            // scenes[currentScene]->setup();
-          // scenes[currentScene]->setup();
             scenes[currentScene]->startMusic();
-            
+            //spaceキーで音楽の停止、シーンの切り替え、新しい音楽の再生
             break;
 
         case 'f':
             ofToggleFullscreen();
             break;
+            //fキーでフルスクリーン
     }
 }
 
