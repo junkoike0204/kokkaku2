@@ -29,6 +29,7 @@ class Basescene{
     virtual void gotMessage(ofMessage msg){};
     virtual void stopMusic(){};
     virtual void startMusic(){};
+    virtual void pauseMusic(){};
     virtual void fftUpdate(){};
     virtual void drawDisc(){};
     ofEasyCam cam;

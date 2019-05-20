@@ -55,8 +55,23 @@ void ofApp::setup(){
 void ofApp::update(){
   scenes[currentScene]->update();
     handJoint();
-     switch (leap.iGestures) {
-     case 3:
+    /* Leap iGesture Key
+     --------------------------------
+     1 = Screen Tap
+     2 = Key Tap
+     3 = Swipe Right
+     4 = Swipe Left
+     5 = Swipe Down
+     6 = Swipe Up
+     7 = Swipe Forward
+     8 = Swipe Backward (towards yourself)
+     9 = Circle Left (counter-clockwise)
+     10 = Circle Right (clockwise)
+     --------------------------------
+     */
+    
+    switch (leap.iGestures) {
+    case 3:
          {
              cout<<"swiped right"<<endl;
              break;
@@ -66,6 +81,18 @@ void ofApp::update(){
              cout<<"swiped left"<<endl;
              break;
          }
+    case 7:
+         {
+             cout<<"swiped forward"<<endl;
+             break;
+         }
+             
+    case 8:
+         {
+             cout<<"swiped back"<<endl;
+             break;
+         }
+             
             
 }
     
@@ -120,7 +147,7 @@ void ofApp::update(){
     //現在表示しているシーンを更新
 }
 
-void ofApp::handJoint(){
+void ofApp::handJoint(){//手の座標を認識、記録するメソッド
     simplehands = leap.getsimplehands();
     if (leap.isFrameNew() &&simplehands.size()) {
         // fingerPos.clear();
@@ -141,7 +168,7 @@ void ofApp::handJoint(){
 //--------------------------------------------------------------
 void ofApp::draw(){
        scenes[currentScene]->draw();
-    
+    //指定されたシーンの描画
 }
 
 //--------------------------------------------------------------
@@ -154,6 +181,13 @@ void ofApp::keyPressed(int key){
            // scenes[currentScene]->setup();
             scenes[currentScene]->startMusic();
             //spaceキーで音楽の停止、シーンの切り替え、新しい音楽の再生
+            break;
+            
+        case 'p':
+            scenes[currentScene]->pauseMusic();
+            break;
+        case 's':
+            scenes[currentScene]->startMusic();
             break;
 
         case 'f':

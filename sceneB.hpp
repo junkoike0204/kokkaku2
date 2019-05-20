@@ -19,10 +19,13 @@ class sceneB : public Basescene {
     void draw();
     void stopMusic();
     void startMusic();
+    void pauseMusic();
+
      void fftUpdate();
     void drawDisc();
     ofSoundPlayer playerB;
     Boolean onoff = false;
+    Boolean pause = false;
     float *volume;
     float* fftSmoothed; //っfft解析結果を格納する配列
     int nBandsToGet;

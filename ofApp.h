@@ -34,9 +34,9 @@ class ofApp : public ofBaseApp{
     //再生する、しないを格納する配列
       //  vector <ofSoundPlayer> songs ;
     
-        ofLight light;//陰影を加える
+        //ofLight light;//陰影を加える
         ofEasyCam cam; //EasyCamのインスタンス化
-        ofTrueTypeFont font;//文字表示用のインスタンス
+       // ofTrueTypeFont font;//文字表示用のインスタンス
     
     int songNUM = 6;//収納されている曲の合計数
     int songID = 0;//曲の通し番号
@@ -48,8 +48,10 @@ class ofApp : public ofBaseApp{
     vector <ofxLeapMotionSimpleHand> simplehands;//必要に応じてサイズを変えることができるベクター配列
     vector <ofPoint> handPos;//手の中心位置を保存するvector配列
     
-    Boolean onoff[30];
-    
+    Boolean RSwipeOnOff[30];
+    Boolean LSwipeOnOff[30];
     
 		
 };
+
+

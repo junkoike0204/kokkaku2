@@ -7,7 +7,7 @@
 #include "sceneB.hpp"
 //-----------------------------------------------------------------------------------------------------
 void sceneB::setup(){
-    
+    ofSetFrameRate(30);
     ofSetVerticalSync(true);
     playerB.load("WhatYouGot.mp3");
     playerB.setVolume(1.0);
@@ -86,6 +86,16 @@ void sceneB::stopMusic(){
 //-----------------------------------------------------------------------------------------------------
 void sceneB::startMusic(){
     playerB.play();
+}
+
+void sceneB::pauseMusic(){
+    //ポーズするか否かを切り替えるスイッチを動かす
+    playerB.setPaused(pause);
+    if(pause == true)
+        pause = false;
+    else
+        pause = true;
+    //切り替えの結果を適用する
 }
 
 void sceneB::drawDisc(){

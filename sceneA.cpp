@@ -36,6 +36,11 @@ void sceneA::update(){
 }
 
 void sceneA::draw(){
+//    ofPushMatrix();
+//          ofTranslate(ofGetWidth()/2, ofGetHeight()/2);
+//      ofRotateDeg(0.1*ofGetFrameRate());
+//    ofPopMatrix();
+  
     ofSetCircleResolution(60);
     ofBackground(64,182,153);
     ofFill();
@@ -57,6 +62,7 @@ void sceneA::draw(){
     
     
     drawDisc();
+  
 }
 
 void sceneA::fftUpdate(){
@@ -92,6 +98,17 @@ void sceneA::stopMusic(){
 
 void sceneA::startMusic(){
     playerA.play();
+}
+
+void sceneA::pauseMusic(){
+    //ポーズするか否かを切り替えるスイッチを動かす
+    playerA.setPaused(pause);
+   if(pause == true)
+       pause = false;
+    else
+        pause = true;
+   // pause != pause;
+    //切り替えの結果を適用する
 }
 
 void sceneA::drawDisc(){
