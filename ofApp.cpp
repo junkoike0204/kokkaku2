@@ -77,6 +77,11 @@ void ofApp::update(){
     else   RSwipeOnOff[ofGetFrameNum()%30] = false;
 //されなければfalseを代入
     
+    if (leap.iGestures ==4) {
+        LSwipeOnOff[ofGetFrameNum()%30]=true;
+    }//もしスワイプが確認されたらtrue
+    else   LSwipeOnOff[ofGetFrameNum()%30] = false;
+    
    
     if (RSwipeOnOff[ofGetFrameNum()%30]==false&&RSwipeOnOff[ofGetFrameNum()%30-1]==true) {
         //もし現フレームでスワイプが認識されず、前フレームでスワイプが認識されていたら
@@ -93,13 +98,16 @@ void ofApp::update(){
         }//スワイプ判定は全てリセット
     }
     
-    
+
     //左向きスワイプで曲の一個戻し
     if (LSwipeOnOff[ofGetFrameNum()%30]==false&&LSwipeOnOff[ofGetFrameNum()%30-1]==true) {
         //もし現フレームでスワイプが認識されず、前フレームでスワイプが認識されていたら
         //つまりスワイプが終わった時点で
         scenes[currentScene]->stopMusic();
-        currentScene-=currentScene;
+        currentScene-=1;
+        if (currentScene<0) {
+            currentScene =2;
+        }
         currentScene %=scenes.size();
         // scenes[currentScene]->setup();
         scenes[currentScene]->setup();
@@ -109,7 +117,7 @@ void ofApp::update(){
             LSwipeOnOff[i]=false;
         }//スワイプ判定は全てリセット
     }
-//    //現在表示しているシーンを更新
+    //現在表示しているシーンを更新
 }
 
 void ofApp::handJoint(){
