@@ -57,7 +57,7 @@ class ofApp : public ofBaseApp{
     Boolean BSwipeOnOff[30];
     Vector Zvelocity;
     Vector velocity;
-		
+    int newacc;
 };
 
 

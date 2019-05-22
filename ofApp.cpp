@@ -27,7 +27,7 @@ void ofApp::setup(){
     scenes[currentScene]->setup();
     
     
-    string song_path_list[] = { "GetLucky.mp3","WasHeSlow.mp3","Wannabe.mp3","FirstDate.mp3","WhatYouGot.mp3","GoodGirls.mp3","Get Dat.mp3" };
+//    string song_path_list[] = { "GetLucky.mp3","WasHeSlow.mp3","Wannabe.mp3","FirstDate.mp3","WhatYouGot.mp3","GoodGirls.mp3","Get Dat.mp3" };
 //
 //    for (int i =0;  i<songNUM; i++) {
 //        ofSoundPlayer SoundSetup;
@@ -72,12 +72,17 @@ void ofApp::handJoint(){//手の座標を認識、記録するメソッド
         leap.setMappingX(-230, 230, -ofGetWidth()/2, ofGetWidth()/2);
         leap.setMappingY(90, 490, -ofGetHeight()/2, ofGetHeight()/2);
         leap.setMappingZ(-150, 150, -200, 200);
+        
+        PrehandPos.push_back(simplehands[0].handPos);
     //    ofVec2f velocity = ofVec2f(LeapCon.palmvelocity, -handPos.y);
         for (int i =0; i<simplehands.size(); i++) {//指の本数だけ
-            handPos.push_back(simplehands[i].handPos);//手の中心座標をvector配列に追加（手の数だけ行う
-            int newacc = abs(handPos[i].z-PrehandPos[i].z);
+                handPos.push_back(simplehands[i].handPos);
+            
+            //手の中心座標をvector配列に追加（手の数だけ行う
+            newacc = (handPos[0].z-PrehandPos[0].z);
             PrehandPos = handPos;
             cout<<newacc<<endl;
+          //  cout<<newacc<<endl;
             
         }
         
