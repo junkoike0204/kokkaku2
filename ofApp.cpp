@@ -51,7 +51,9 @@ void ofApp::setup(){
     Frame frame = LeapCon.frame (); // controller is a Controller object
     Hand hand = frame.hands()[0];
     Vector position = hand.palmPosition();
-    Vector velocity = hand.palmVelocity();
+     velocity = hand.palmVelocity();
+ 
+    
 }
 
 //--------------------------------------------------------------
@@ -94,6 +96,7 @@ void ofApp::swipe(){
      10 = Circle Right (clockwise)
      --------------------------------
      */
+    cout<<velocity<<endl;
     
     switch (leap.iGestures) {
         case 3:
