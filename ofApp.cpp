@@ -59,7 +59,7 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::update(){
   scenes[currentScene]->update();
-    //handJoint();
+    handJoint();
     swipe();
     //現在表示しているシーンを更新
 }
@@ -75,7 +75,13 @@ void ofApp::handJoint(){//手の座標を認識、記録するメソッド
     //    ofVec2f velocity = ofVec2f(LeapCon.palmvelocity, -handPos.y);
         for (int i =0; i<simplehands.size(); i++) {//指の本数だけ
             handPos.push_back(simplehands[i].handPos);//手の中心座標をvector配列に追加（手の数だけ行う
+            int newacc = abs(handPos[i].z-PrehandPos[i].z);
+            PrehandPos = handPos;
+            cout<<newacc<<endl;
+            
         }
+        
+       
         
       
         }
@@ -96,7 +102,7 @@ void ofApp::swipe(){
      10 = Circle Right (clockwise)
      --------------------------------
      */
-    cout<<velocity<<endl;
+   // cout<<velocity<<endl;
     
     switch (leap.iGestures) {
         case 3:

@@ -50,12 +50,13 @@ class ofApp : public ofBaseApp{
     Gesture gesture;
     vector <ofxLeapMotionSimpleHand> simplehands;//必要に応じてサイズを変えることができるベクター配列
     vector <ofPoint> handPos;//手の中心位置を保存するvector配列
-    
+    vector <ofPoint> PrehandPos;
     Boolean RSwipeOnOff[30];
     Boolean LSwipeOnOff[30];
     Boolean FSwipeOnOff[30];
     Boolean BSwipeOnOff[30];
-    
+    Vector Zvelocity;
+    Vector velocity;
 		
 };
 
