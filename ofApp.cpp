@@ -48,102 +48,17 @@ void ofApp::setup(){
         LSwipeOnOff[i]=false;
     }//右swipe認識用の配列のリセット。
     
-   // songs[1].play();
+    Frame frame = LeapCon.frame (); // controller is a Controller object
+    Hand hand = frame.hands()[0];
+    Vector position = hand.palmPosition();
+    Vector velocity = hand.palmVelocity();
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
   scenes[currentScene]->update();
-    handJoint();
-    /* Leap iGesture Key
-     --------------------------------
-     1 = Screen Tap
-     2 = Key Tap
-     3 = Swipe Right
-     4 = Swipe Left
-     5 = Swipe Down
-     6 = Swipe Up
-     7 = Swipe Forward
-     8 = Swipe Backward (towards yourself)
-     9 = Circle Left (counter-clockwise)
-     10 = Circle Right (clockwise)
-     --------------------------------
-     */
-    
-    switch (leap.iGestures) {
-    case 3:
-         {
-             cout<<"swiped right"<<endl;
-             break;
-         }
-    case 4:
-         {
-             cout<<"swiped left"<<endl;
-             break;
-         }
-    case 7:
-         {
-             cout<<"swiped forward"<<endl;
-             break;
-         }
-             
-    case 8:
-         {
-             cout<<"swiped back"<<endl;
-             break;
-         }
-             
-            
-}
-    
-    leap.updateGestures();  // check for gesture updates
-    leap.markFrameAsOld();
-    if (leap.iGestures ==3) {
-        RSwipeOnOff[ofGetFrameNum()%30]=true;
-    }//もしスワイプが確認されたらtrue
-    else   RSwipeOnOff[ofGetFrameNum()%30] = false;
-//されなければfalseを代入
-    
-    if (leap.iGestures ==4) {
-        LSwipeOnOff[ofGetFrameNum()%30]=true;
-    }//もしスワイプが確認されたらtrue
-    else   LSwipeOnOff[ofGetFrameNum()%30] = false;
-    
-   
-    if (RSwipeOnOff[ofGetFrameNum()%30]==false&&RSwipeOnOff[ofGetFrameNum()%30-1]==true) {
-        //もし現フレームでスワイプが認識されず、前フレームでスワイプが認識されていたら
-        //つまりスワイプが終わった時点で
-        scenes[currentScene]->stopMusic();
-        currentScene++;
-        currentScene %=scenes.size();
-        // scenes[currentScene]->setup();
-        scenes[currentScene]->setup();
-        scenes[currentScene]->startMusic();
-        //シーンの切り替え作業を行う
-        for (int i =0; i<30; i++) {
-            RSwipeOnOff[i]=false;
-        }//スワイプ判定は全てリセット
-    }
-    
-
-    //左向きスワイプで曲の一個戻し
-    if (LSwipeOnOff[ofGetFrameNum()%30]==false&&LSwipeOnOff[ofGetFrameNum()%30-1]==true) {
-        //もし現フレームでスワイプが認識されず、前フレームでスワイプが認識されていたら
-        //つまりスワイプが終わった時点で
-        scenes[currentScene]->stopMusic();
-        currentScene-=1;
-        if (currentScene<0) {
-            currentScene =2;
-        }
-        currentScene %=scenes.size();
-        // scenes[currentScene]->setup();
-        scenes[currentScene]->setup();
-        scenes[currentScene]->startMusic();
-        //シーンの切り替え作業を行う
-        for (int i =0; i<30; i++) {
-            LSwipeOnOff[i]=false;
-        }//スワイプ判定は全てリセット
-    }
+    //handJoint();
+    swipe();
     //現在表示しているシーンを更新
 }
 
@@ -163,8 +78,163 @@ void ofApp::handJoint(){//手の座標を認識、記録するメソッド
       
         }
 }
-    
 
+void ofApp::swipe(){
+    /* Leap iGesture Key
+     --------------------------------
+     1 = Screen Tap
+     2 = Key Tap
+     3 = Swipe Right
+     4 = Swipe Left
+     5 = Swipe Down
+     6 = Swipe Up
+     7 = Swipe Forward
+     8 = Swipe Backward (towards yourself)
+     9 = Circle Left (counter-clockwise)
+     10 = Circle Right (clockwise)
+     --------------------------------
+     */
+    
+    switch (leap.iGestures) {
+        case 3:
+        {
+            cout<<"swiped right"<<endl;
+            
+            break;
+        }
+        case 4:
+        {
+            cout<<"swiped left"<<endl;
+            break;
+        }
+        case 5:
+        {
+            cout<<"swiped down"<<endl;
+            //scenes[currentScene]->pauseMusic();
+            break;
+        }
+        case 6:
+        {
+            cout<<"swiped up"<<endl;
+            //scenes[currentScene]->pauseMusic();
+            break;
+        }
+        case 7:
+        {
+            cout<<"swiped forward"<<endl;
+              //scenes[currentScene]->pauseMusic();
+            
+            break;
+        }
+            
+        case 8:
+        {
+            cout<<"swiped back"<<endl;
+             //scenes[currentScene]->pauseMusic();
+            break;
+      
+        }
+       
+        default:{
+            cout<<".";
+        }
+            
+    }
+    
+    leap.updateGestures();  // check for gesture updates
+    
+    
+    RSwipeOnOff[ofGetFrameNum()%30]=false;
+    LSwipeOnOff[ofGetFrameNum()%30]=false;
+    FSwipeOnOff[ofGetFrameNum()%30]=false;
+    BSwipeOnOff[ofGetFrameNum()%30]=false;
+    switch (leap.iGestures) {
+        case 3:
+            RSwipeOnOff[ofGetFrameNum()%30]=true;
+            break;
+        case 4:
+            LSwipeOnOff[ofGetFrameNum()%30]=true;
+            break;
+        case 7:
+            FSwipeOnOff[ofGetFrameNum()%30]=true;
+            break;
+        case 8:
+            BSwipeOnOff[ofGetFrameNum()%30]=true;
+            break;
+        default:
+            break;
+    }
+    
+//    if (leap.iGestures ==3) {
+//        RSwipeOnOff[ofGetFrameNum()%30]=true;
+//    }//もしスワイプが確認されたらtrue
+//    else   RSwipeOnOff[ofGetFrameNum()%30] = false;
+//    //されなければfalseを代入
+//
+//    if (leap.iGestures ==4) {
+//        LSwipeOnOff[ofGetFrameNum()%30]=true;
+//    }//もしスワイプが確認されたらtrue
+//    else   LSwipeOnOff[ofGetFrameNum()%30] = false;
+//    if (leap.iGestures ==7) {
+//        FSwipeOnOff[ofGetFrameNum()%30]=true;
+//    }//もしスワイプが確認されたらtrue
+//    else   FSwipeOnOff[ofGetFrameNum()%30] = false;
+//    if (leap.iGestures ==8) {
+//        BSwipeOnOff[ofGetFrameNum()%30]=true;
+//    }//もしスワイプが確認されたらtrue
+//    else   BSwipeOnOff[ofGetFrameNum()%30] = false;
+//
+    //右スワイプでシーンとばし
+    if (RSwipeOnOff[ofGetFrameNum()%30]==false&&RSwipeOnOff[ofGetFrameNum()%30-1]==true) {
+        //もし現フレームでスワイプが認識されず、前フレームでスワイプが認識されていたら
+        //つまりスワイプが終わった時点で
+        scenes[currentScene]->stopMusic();
+        currentScene++;
+        currentScene %=scenes.size();
+        // scenes[currentScene]->setup();
+        scenes[currentScene]->setup();
+        scenes[currentScene]->startMusic();
+        //シーンの切り替え作業を行う
+        for (int i =0; i<30; i++) {
+            RSwipeOnOff[i]=false;
+        }//スワイプ判定は全てリセット
+    }
+    
+    
+    //左向きスワイプで曲の一個戻し
+    if (LSwipeOnOff[ofGetFrameNum()%30]==true&&LSwipeOnOff[ofGetFrameNum()%30-1]==true) {
+        //もし現フレームでスワイプが認識されず、前フレームでスワイプが認識されていたら
+        //つまりスワイプが終わった時点で
+        scenes[currentScene]->stopMusic();
+        currentScene-=1;
+        if (currentScene<0) {
+            currentScene =2;
+        }
+        currentScene %=scenes.size();
+        // scenes[currentScene]->setup();
+        scenes[currentScene]->setup();
+        scenes[currentScene]->startMusic();
+        //シーンの切り替え作業を行う
+        for (int i =0; i<30; i++) {
+            LSwipeOnOff[i]=false;
+        }//スワイプ判定は全てリセット
+    }
+        
+//        if  (FSwipeOnOff[ofGetFrameNum()%30]==false&&FSwipeOnOff[ofGetFrameNum()%30-1]==true) {
+          if  (FSwipeOnOff[ofGetFrameNum()%30]==false&&FSwipeOnOff[ofGetFrameNum()%30]==true) {
+            scenes[currentScene]->pauseMusic();
+            cout<<"scratch detected"<<endl;
+            //シーンの切り替え作業を行う
+            for (int i =0; i<30; i++) {
+                BSwipeOnOff[i]=false;
+                FSwipeOnOff[i]=false;
+            }//スワイプ判定は全てリセット
+        
+    }
+
+    
+    leap.markFrameAsOld();
+}
 //--------------------------------------------------------------
 void ofApp::draw(){
        scenes[currentScene]->draw();
@@ -196,7 +266,7 @@ void ofApp::keyPressed(int key){
             //fキーでフルスクリーン
     }
 }
-
+    
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key){
 

@@ -14,7 +14,7 @@ class ofApp : public ofBaseApp{
 		void setup();
 		void update();
 		void draw();
-
+    
 		void keyPressed(int key);
 		void keyReleased(int key);
 		void mouseMoved(int x, int y );
@@ -27,6 +27,9 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
         void handJoint();
+        void scratch();
+        void swipe();
+
         vector <Basescene *> scenes;//sceneA,B,C のインスタンス、ポインタを収納する
         int currentScene;//現在のシーン番号
     
@@ -50,6 +53,8 @@ class ofApp : public ofBaseApp{
     
     Boolean RSwipeOnOff[30];
     Boolean LSwipeOnOff[30];
+    Boolean FSwipeOnOff[30];
+    Boolean BSwipeOnOff[30];
     
 		
 };
