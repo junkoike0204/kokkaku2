@@ -20,8 +20,7 @@ class sceneB : public Basescene {
     void stopMusic();
     void startMusic();
     void pauseMusic();
-
-     void fftUpdate();
+    void fftUpdate();
     void drawDisc();
     ofSoundPlayer playerB;
     Boolean onoff = false;

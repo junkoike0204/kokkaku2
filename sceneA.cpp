@@ -9,7 +9,7 @@
 void sceneA::setup(){
     ofSetVerticalSync(true);
     playerA.load("WasHeSlow.mp3");
-    playerA.setVolume(1.0);
+    playerA.setVolume(0.5);
     playerA.setMultiPlay(false);
     playerA.setLoop(true); //loop on by "true"
     ofSetCircleResolution(50);
