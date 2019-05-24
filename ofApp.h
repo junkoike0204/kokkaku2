@@ -1,5 +1,4 @@
 #pragma once
-
 #include "ofMain.h"
 #include "Basescene.hpp"
 #include "sceneA.hpp"
@@ -29,7 +28,6 @@ class ofApp : public ofBaseApp{
         void handJoint();
         void scratch();
         void swipe();
-
         vector <Basescene *> scenes;//sceneA,B,C のインスタンス、ポインタを収納する
         int currentScene;//現在のシーン番号
     
@@ -58,6 +56,9 @@ class ofApp : public ofBaseApp{
     Vector Zvelocity;
     Vector velocity;
     int newacc;
+    float tsumami =0.7;
+   
+    ofSoundPlayer Scratch[4];
 };
 
 

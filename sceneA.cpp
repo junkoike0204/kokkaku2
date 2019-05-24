@@ -9,7 +9,7 @@
 void sceneA::setup(){
     ofSetVerticalSync(true);
     playerA.load("WasHeSlow.mp3");
-    playerA.setVolume(0.5);
+    playerA.setVolume(0.4);
     playerA.setMultiPlay(false);
     playerA.setLoop(true); //loop on by "true"
     ofSetCircleResolution(50);
@@ -62,7 +62,7 @@ void sceneA::draw(){
     
     
     drawDisc();
-  
+    
 }
 
 void sceneA::fftUpdate(){
@@ -100,6 +100,13 @@ void sceneA::startMusic(){
     playerA.play();
 }
 
+void sceneA::volumeUp(){
+    playerA.play();
+}
+void sceneA::volumeDown(){
+    playerA.play();
+}
+
 void sceneA::pauseMusic(){
     //ポーズするか否かを切り替えるスイッチを動かす
     playerA.setPaused(pause);
@@ -117,7 +124,7 @@ void sceneA::drawDisc(){
     for (int i =2; i<10; i++) {
         ofDrawCircle(ofGetWidth()/2, ofGetHeight()/2, i*40);
     }
-    ofDrawBitmapString("sceneA", 20, 20);
+    ofDrawBitmapString("Was He Slow? from Baby Driver Soundtrack", 20, 20);
     ofFill();
     ofSetColor(64, 182, 152);
     ofDrawCircle(ofGetWidth()/2, ofGetHeight()/2, 50);

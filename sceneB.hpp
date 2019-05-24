@@ -22,6 +22,9 @@ class sceneB : public Basescene {
     void pauseMusic();
     void fftUpdate();
     void drawDisc();
+    void volumeUp();
+    void volumeDown();
+    
     ofSoundPlayer playerB;
     Boolean onoff = false;
     Boolean pause = false;

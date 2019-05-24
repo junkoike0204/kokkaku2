@@ -2,12 +2,15 @@
 #include "ofxLeapMotion2.h"
 //--------------------------------------------------------------
 void ofApp::setup(){
+    
     leap.open();
     leap.setupGestures();
     ofSetFrameRate(30);
+    //ofToggleFullscreen();
     LeapCon.enableGesture(Leap::Gesture::TYPE_SWIPE);
     float microseconds = gesture.duration();
     float seconds = gesture.durationSeconds();
+    
     //this sentence lies here just to check if this file is updated on github//
     ofSetVerticalSync(true);//ソフトの更新、ディスプレイの更新の頻度を一致させる
     cam.setOrientation(ofPoint(-20,0,0));
@@ -27,7 +30,7 @@ void ofApp::setup(){
     scenes[currentScene]->setup();
     
     
-//    string song_path_list[] = { "GetLucky.mp3","WasHeSlow.mp3","Wannabe.mp3","FirstDate.mp3","WhatYouGot.mp3","GoodGirls.mp3","Get Dat.mp3" };
+   string song_path_list[] = { "GetLucky.mp3","WasHeSlow.mp3","Wannabe.mp3","FirstDate.mp3","WhatYouGot.mp3","GoodGirls.mp3","Get Dat.mp3" };
 //
 //    for (int i =0;  i<songNUM; i++) {
 //        ofSoundPlayer SoundSetup;
@@ -51,8 +54,16 @@ void ofApp::setup(){
     Frame frame = LeapCon.frame (); // controller is a Controller object
     Hand hand = frame.hands()[0];
     Vector position = hand.palmPosition();
-     velocity = hand.palmVelocity();
- 
+    velocity = hand.palmVelocity();
+    
+    string sound_path_list[] = {  "Scratch.mp3","Scratch1.mp3","Scratch2.mp3"};
+    //scratch sound effect 
+    for (int i=0; i<3; i++) {
+        Scratch[i].load(sound_path_list[i]);
+        Scratch[i].setVolume(1.0);
+        Scratch[i].setLoop(false);
+    }
+  
     
 }
 
@@ -72,24 +83,25 @@ void ofApp::handJoint(){//手の座標を認識、記録するメソッド
         leap.setMappingX(-230, 230, -ofGetWidth()/2, ofGetWidth()/2);
         leap.setMappingY(90, 490, -ofGetHeight()/2, ofGetHeight()/2);
         leap.setMappingZ(-150, 150, -200, 200);
-        
         PrehandPos.push_back(simplehands[0].handPos);
     //    ofVec2f velocity = ofVec2f(LeapCon.palmvelocity, -handPos.y);
-        for (int i =0; i<simplehands.size(); i++) {//指の本数だけ
-                handPos.push_back(simplehands[i].handPos);
-            
-            //手の中心座標をvector配列に追加（手の数だけ行う
+        
+///////////////////////////手の加速度を測定。///////////////////////////////
+        for (int i =0; i<simplehands.size(); i++) {//手の数だけ
+            handPos.push_back(simplehands[i].handPos);
             newacc = (handPos[0].z-PrehandPos[0].z);
             PrehandPos = handPos;
             cout<<newacc<<endl;
           //  cout<<newacc<<endl;
+        }
+        /////////////////////////速度が一定以上の時/////////////////////////
+        if ( newacc>30) {
+            scratch();
             
         }
-        
-       
-        
-      
-        }
+////////////////////////////////////////////////////////////////////////////
+    
+    }
 }
 
 void ofApp::swipe(){
@@ -130,6 +142,7 @@ void ofApp::swipe(){
         case 6:
         {
             cout<<"swiped up"<<endl;
+            
             //scenes[currentScene]->pauseMusic();
             break;
         }
@@ -137,7 +150,6 @@ void ofApp::swipe(){
         {
             cout<<"swiped forward"<<endl;
               //scenes[currentScene]->pauseMusic();
-            
             break;
         }
             
@@ -148,24 +160,33 @@ void ofApp::swipe(){
             break;
       
         }
+        case 10:
+        {
+            cout<<"clock right"<<endl;
+            tsumami+=0.02;
+            if (tsumami>1.0) {
+                tsumami-=1.0;
+            }
+            cout<<"tsumami"<<endl;
+            break;
+            
+        }
        
         default:{
-            cout<<".";
+           // cout<<".";
         }
-            
     }
     
     leap.updateGestures();  // check for gesture updates
-    
-    
     RSwipeOnOff[ofGetFrameNum()%30]=false;
     LSwipeOnOff[ofGetFrameNum()%30]=false;
     FSwipeOnOff[ofGetFrameNum()%30]=false;
     BSwipeOnOff[ofGetFrameNum()%30]=false;
     switch (leap.iGestures) {
-        case 3:
+        case 3:{
             RSwipeOnOff[ofGetFrameNum()%30]=true;
             break;
+        }
         case 4:
             LSwipeOnOff[ofGetFrameNum()%30]=true;
             break;
@@ -243,10 +264,8 @@ void ofApp::swipe(){
                 BSwipeOnOff[i]=false;
                 FSwipeOnOff[i]=false;
             }//スワイプ判定は全てリセット
-        
     }
 
-    
     leap.markFrameAsOld();
 }
 //--------------------------------------------------------------
@@ -270,6 +289,10 @@ void ofApp::keyPressed(int key){
         case 'p':
             scenes[currentScene]->pauseMusic();
             break;
+        case 'o':{
+            int que = ofRandom(4);
+            Scratch[que].play();
+            break;}
         case 's':
             scenes[currentScene]->startMusic();
             break;
@@ -281,7 +304,15 @@ void ofApp::keyPressed(int key){
     }
 }
     
-//--------------------------------------------------------------
+//--------------------------------------------------------------------------------------
+void ofApp::scratch(){
+        cout<<"superspeed:"<<abs(newacc)<<endl;
+        int que = ofRandom(2);
+        Scratch[que].play();
+    
+}
+////--------------------------------------------------------------
+
 void ofApp::keyReleased(int key){
 
 }

@@ -22,6 +22,9 @@ class sceneC : public Basescene {
     void pauseMusic();
     void fftUpdate();
     void drawDisc();
+    void volumeUp();
+    void volumeDown();
+    
     ofSoundPlayer playerC;
     Boolean onoff = false;
     Boolean pause = false;
@@ -32,6 +35,7 @@ class sceneC : public Basescene {
     int boxNUM = 100;
 //    ofBoxPrimitive box[100];
     ofEasyCam cam;
-    
+    ofColor color;
+    int a=0;
 };
 

@@ -32,7 +32,10 @@ class Basescene{
     virtual void pauseMusic(){};
     virtual void fftUpdate(){};
     virtual void drawDisc(){};
-     virtual void scratch(){};
+    virtual void scratch(){};
+    virtual void volumeUp(){};
+    virtual void volumeDown(){};
+    
     ofEasyCam cam;
     ofBoxPrimitive box;
 };

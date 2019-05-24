@@ -10,7 +10,7 @@ void sceneB::setup(){
     ofSetFrameRate(30);
     ofSetVerticalSync(true);
     playerB.load("WhatYouGot.mp3");
-    playerB.setVolume(1.0);
+    playerB.setVolume(0.2);
     playerB.setMultiPlay(false);
     playerB.setLoop(true); //loop on by "true"
     
@@ -64,7 +64,7 @@ void sceneB::draw(){
     drawDisc();
     
     cam.end();
-     ofDrawBitmapString("sceneB", 20, 20);
+     ofDrawBitmapString("What you got /Tofubeats", 20, 20);
 }
 //-----------------------------------------------------------------------------------------------------
 void sceneB::fftUpdate(){
@@ -111,4 +111,10 @@ void sceneB::drawDisc(){
     //draw the disc itself
     ofSetColor(0, 0, 0);
     ofDrawCircle(100,200,300, ofGetHeight()/2);
+}
+void sceneB::volumeUp(){
+    playerB.play();
+}
+void sceneB::volumeDown(){
+    playerB.play();
 }
