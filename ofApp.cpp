@@ -1,33 +1,45 @@
 #include "ofApp.h"
 #include "ofxLeapMotion2.h"
+
+//シーンの切り替え、全シーンのセットアップ、スワイプの認識はこのクラスで行います。
 //--------------------------------------------------------------
 void ofApp::setup(){
     
+    ofSetFrameRate(30);
+    
     leap.open();
     leap.setupGestures();
-    ofSetFrameRate(30);
-    //ofToggleFullscreen();
     LeapCon.enableGesture(Leap::Gesture::TYPE_SWIPE);
+      //leapmotionの接続とスワイプに対する準備
+    
     float microseconds = gesture.duration();
     float seconds = gesture.durationSeconds();
-    
+  //結局使っていないスワイプの長さを収納する変数
+   
+    Frame frame = LeapCon.frame (); // controller is a Controller object
+    Hand hand = frame.hands()[0];
+    Vector position = hand.palmPosition();
+    velocity = hand.palmVelocity();
+    //leaapの教科書等参考
+  
     //this sentence lies here just to check if this file is updated on github//
     ofSetVerticalSync(true);//ソフトの更新、ディスプレイの更新の頻度を一致させる
     cam.setOrientation(ofPoint(-20,0,0));
     
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_NORMALIZE);
-    ofSetFrameRate(30);
+
     Basescene * sa = new sceneA();
     scenes.push_back(sa);
     Basescene * sb = new sceneB();
     scenes.push_back(sb);
     Basescene * sc = new sceneC();
-    
     scenes.push_back(sc);
-    //現在シーンを０に。
+    //sceneA,B,Cを作り、ベクター配列に収納しておく
+  
     currentScene = 0;
-    scenes[currentScene]->setup();
+    //scenes[currentScene]->setup();
+      //現在シーンを０に。セットアップ
     
     
    string song_path_list[] = { "GetLucky.mp3","WasHeSlow.mp3","Wannabe.mp3","FirstDate.mp3","WhatYouGot.mp3","GoodGirls.mp3","Get Dat.mp3" };
@@ -49,20 +61,20 @@ void ofApp::setup(){
     for (int i=0; i<30; i++) {
         RSwipeOnOff[i]=false;
         LSwipeOnOff[i]=false;
-    }//右swipe認識用の配列のリセット。
+    }//右左swipe認識用の配列のリセット。
     
-    Frame frame = LeapCon.frame (); // controller is a Controller object
-    Hand hand = frame.hands()[0];
-    Vector position = hand.palmPosition();
-    velocity = hand.palmVelocity();
+  
+    
     
     string sound_path_list[] = {  "Scratch.mp3","Scratch1.mp3","Scratch2.mp3"};
+    //三種類のスクラッチ音をテキストで管理します
+    
     //scratch sound effect 
     for (int i=0; i<3; i++) {
         Scratch[i].load(sound_path_list[i]);
         Scratch[i].setVolume(1.0);
         Scratch[i].setLoop(false);
-    }
+    }//それぞれの効果音の準備
   
     
 }
@@ -84,6 +96,7 @@ void ofApp::handJoint(){//手の座標を認識、記録するメソッド
         leap.setMappingY(90, 490, -ofGetHeight()/2, ofGetHeight()/2);
         leap.setMappingZ(-150, 150, -200, 200);
         PrehandPos.push_back(simplehands[0].handPos);
+        //leapの教科書参考
     //    ofVec2f velocity = ofVec2f(LeapCon.palmvelocity, -handPos.y);
         
 ///////////////////////////手の加速度を測定。///////////////////////////////
@@ -94,17 +107,18 @@ void ofApp::handJoint(){//手の座標を認識、記録するメソッド
             cout<<newacc<<endl;
           //  cout<<newacc<<endl;
         }
-        /////////////////////////速度が一定以上の時/////////////////////////
+/////////////////////////////////速度が一定以上の時/////////////////////////
         if ( newacc>30) {
             scratch();
-            
         }
 ////////////////////////////////////////////////////////////////////////////
     
-    }
+    }//if (leap.isFrameNew() &&simplehands.size()) にかかる
 }
 
 void ofApp::swipe(){
+    //leap.hに定義されているスワイプを認識する昨日iGesture key。今回実際に使ったのはright leftのみ。
+    //scratchにforward,backwardを使うことを考えていたが、結局z軸方向の加速度をとるかたちで実装した
     /* Leap iGesture Key
      --------------------------------
      1 = Screen Tap
@@ -119,7 +133,7 @@ void ofApp::swipe(){
      10 = Circle Right (clockwise)
      --------------------------------
      */
-   // cout<<velocity<<endl;
+  
     
     switch (leap.iGestures) {
         case 3:
@@ -166,7 +180,7 @@ void ofApp::swipe(){
             tsumami+=0.02;
             if (tsumami>1.0) {
                 tsumami-=1.0;
-            }
+            }//volumeUp用に付けたが間に合わず。
             cout<<"tsumami"<<endl;
             break;
             
@@ -176,7 +190,7 @@ void ofApp::swipe(){
            // cout<<".";
         }
     }
-    
+    //諏訪イプが認識sされたフレームのところだけtrueを入れる、フレーム数分の配列を作る
     leap.updateGestures();  // check for gesture updates
     RSwipeOnOff[ofGetFrameNum()%30]=false;
     LSwipeOnOff[ofGetFrameNum()%30]=false;
