@@ -3,7 +3,8 @@
 //  kokkaku
 //
 //  Created by 小池潤 on 2019/05/11.
-//
+//レコードプレーヤーを平面的に再現したクラス
+//song:Was he slow?
 
 #include "sceneA.hpp"
 void sceneA::setup(){
